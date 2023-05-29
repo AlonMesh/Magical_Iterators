@@ -1,76 +1,116 @@
 #ifndef MAGICAL_CONTAINER_HPP
 #define MAGICAL_CONTAINER_HPP
 #include <iostream>
-#include "AscendingIterator.hpp"
+using namespace std;
+#include <vector>
 
-class MagicalContainer
+namespace ariel
 {
-private:
-    int *elements;    // Pointer to the dynamic array
-    int length;       // Current number of elements in the container
-    int fullCapacity; // Current capacity of the dynamic array
-
-public:
-    MagicalContainer()
+    class MagicalContainer
     {
-        fullCapacity = 10; // Initial capacity of the container
-        length = 0;        // Initially, the container is empty
-        elements = new int[fullCapacity];
-    }
+        class Iterator
+        {
+        public:
+            int* currentElement;
+            virtual ~Iterator() = default;
+            virtual int &operator*() = 0;
+            virtual Iterator &operator++() = 0;
+        };
 
-    ~MagicalContainer()
-    {
-        delete[] elements;
-    }
+        vector<int> elements;
+        vector<Iterator*> iterators; // Collection of iterators
 
-    // Add an element to the container
-    void addElement(int element);
-
-    // Remove an element from the container
-    void removeElement(int element);
-
-    // Get the size of the container
-    int size() const;
-
-    class AscendingIterator
-    {
     public:
-        // Default constructor
-        AscendingIterator(MagicalContainer &container);
+        MagicalContainer();
 
-        // Copy constructor
-        AscendingIterator(const AscendingIterator &other);
+        ~MagicalContainer();
 
-        // Destructor
-        ~AscendingIterator();
+        // Add an element to the container
+        void addElement(int element);
 
-        // Assignment operator
-        bool operator=(const AscendingIterator &other);
+        // Remove an element from the container
+        void removeElement(int element);
 
-        // Equality comparison
-        bool operator==(const AscendingIterator &other);
+        // Get the size of the container
+        int size() const;
 
-        // Inequality comparison
-        bool operator!=(const AscendingIterator &other);
+        class AscendingIterator : public Iterator
+        {
+        private:
+            vector<int> sortedVec;
+            MagicalContainer *original_container;
+            int *currentElement;
 
-        // GT comparison
-        bool operator<(const AscendingIterator &other);
+        public:
+            AscendingIterator();
+            AscendingIterator(MagicalContainer &container);
+            AscendingIterator(const AscendingIterator &other);
+            ~AscendingIterator();
 
-        // LT comparison
-        bool operator>(const AscendingIterator &other);
+            AscendingIterator &operator=(const AscendingIterator &other);
 
-        // Dereference operator
-        int &operator*();
+            int &operator*() override;
+            AscendingIterator &operator++() override;
+            bool operator==(const AscendingIterator &other) const;
+            bool operator!=(const AscendingIterator &other) const;
+            bool operator<(const AscendingIterator &other) const;
+            bool operator>(const AscendingIterator &other) const;
 
-        // Pre-increment operator
-        AscendingIterator &operator++();
+            AscendingIterator begin();
+            AscendingIterator end();
+        };
 
-        // begin(type)
-        static AscendingIterator begin();
+        class SideCrossIterator : public Iterator
+        {
+        private:
+            vector<int> sortedVec;
+            MagicalContainer *original_container;
+            int *currentElement;
 
-        // end(type)
-        static AscendingIterator end();
+        public:
+            SideCrossIterator();
+            SideCrossIterator(MagicalContainer &container);
+            SideCrossIterator(const SideCrossIterator &other);
+            ~SideCrossIterator();
+
+            SideCrossIterator &operator=(const SideCrossIterator &other);
+
+            int &operator*() override;
+            SideCrossIterator &operator++() override;
+            bool operator==(const SideCrossIterator &other) const;
+            bool operator!=(const SideCrossIterator &other) const;
+            bool operator<(const SideCrossIterator &other) const;
+            bool operator>(const SideCrossIterator &other) const;
+
+            SideCrossIterator begin();
+            SideCrossIterator end();
+        };
+
+        class PrimeIterator : public Iterator
+        {
+        private:
+            vector<int> sortedVec;
+            MagicalContainer *original_container;
+            int *currentElement;
+
+        public:
+            PrimeIterator();
+            PrimeIterator(MagicalContainer &container);
+            PrimeIterator(const PrimeIterator &other);
+            ~PrimeIterator();
+
+            PrimeIterator &operator=(const PrimeIterator &other);
+
+            int &operator*() override;
+            PrimeIterator &operator++() override;
+            bool operator==(const PrimeIterator &other) const;
+            bool operator!=(const PrimeIterator &other) const;
+            bool operator<(const PrimeIterator &other) const;
+            bool operator>(const PrimeIterator &other) const;
+
+            PrimeIterator begin();
+            PrimeIterator end();
+        };
     };
-};
-
+}
 #endif
