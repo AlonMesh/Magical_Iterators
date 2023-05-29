@@ -12,9 +12,17 @@ namespace ariel
         {
         public:
             int* currentElement;
+
+            Iterator() : currentElement(nullptr) {} // Initialize currentElement to nullptr
+
             virtual ~Iterator() = default;
             virtual int &operator*() = 0;
             virtual Iterator &operator++() = 0;
+
+            Iterator(const Iterator&) = delete; // Disable copy constructor
+            Iterator& operator=(const Iterator&) = delete; // Disable copy assignment operator
+            Iterator(Iterator&&) = delete; // Disable move constructor
+            Iterator& operator=(Iterator&&) = delete; // Disable move assignment operator
         };
 
         vector<int> elements;
@@ -24,6 +32,12 @@ namespace ariel
         MagicalContainer();
 
         ~MagicalContainer();
+
+        MagicalContainer(const MagicalContainer&) = default;
+        MagicalContainer& operator=(const MagicalContainer&) = default;
+
+        MagicalContainer(MagicalContainer&&) = default;
+        MagicalContainer& operator=(MagicalContainer&&) = default;
 
         // Add an element to the container
         void addElement(int element);
@@ -45,7 +59,7 @@ namespace ariel
             AscendingIterator();
             AscendingIterator(MagicalContainer &container);
             AscendingIterator(const AscendingIterator &other);
-            ~AscendingIterator();
+            ~AscendingIterator() override;
 
             AscendingIterator &operator=(const AscendingIterator &other);
 
@@ -58,6 +72,9 @@ namespace ariel
 
             AscendingIterator begin();
             AscendingIterator end();
+
+            AscendingIterator(const AscendingIterator&&) = delete; // Delete move constructor
+            AscendingIterator& operator=(const AscendingIterator&&) = delete; // Delete move assignment operator
         };
 
         class SideCrossIterator : public Iterator
@@ -71,7 +88,7 @@ namespace ariel
             SideCrossIterator();
             SideCrossIterator(MagicalContainer &container);
             SideCrossIterator(const SideCrossIterator &other);
-            ~SideCrossIterator();
+            ~SideCrossIterator() override;
 
             SideCrossIterator &operator=(const SideCrossIterator &other);
 
@@ -84,6 +101,9 @@ namespace ariel
 
             SideCrossIterator begin();
             SideCrossIterator end();
+
+            SideCrossIterator(const SideCrossIterator&&) = delete; // Delete move constructor
+            SideCrossIterator& operator=(const SideCrossIterator&&) = delete; // Delete move assignment operator
         };
 
         class PrimeIterator : public Iterator
@@ -97,7 +117,7 @@ namespace ariel
             PrimeIterator();
             PrimeIterator(MagicalContainer &container);
             PrimeIterator(const PrimeIterator &other);
-            ~PrimeIterator();
+            ~PrimeIterator() override;
 
             PrimeIterator &operator=(const PrimeIterator &other);
 
@@ -110,6 +130,9 @@ namespace ariel
 
             PrimeIterator begin();
             PrimeIterator end();
+
+            PrimeIterator(const PrimeIterator&&) = delete; // Delete move constructor
+            PrimeIterator& operator=(const PrimeIterator&&) = delete; // Delete move assignment operator
         };
     };
 }
