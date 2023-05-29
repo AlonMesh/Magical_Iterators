@@ -142,13 +142,16 @@ namespace ariel
 
     MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::begin()
     {
-        // TODO: Implement and return default value
+        // AscendingIterator beginIterator(*original_container); // Create an iterator for the beginning
+        // beginIterator.currentElement = &(original_container->elements[0]); // Set the iterator to the first element
+        // return beginIterator;
         return AscendingIterator();
     }
 
     MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::end()
     {
-        // TODO: Implement and return default value
+        // AscendingIterator endIterator(*original_container); // Create an iterator for the end
+        // endIterator.currentElement = nullptr; // Set the iterator to null to indicate the end
         return AscendingIterator();
     }
 
